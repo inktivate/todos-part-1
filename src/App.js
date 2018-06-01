@@ -5,23 +5,36 @@ import todoList from './todos.json';
 
 class TodoItem extends Component {
   render() {
-    return (
-      <li className={this.props.status}>
-		  	<div className="view">
-		  		<input className="toggle" type="checkbox" />
-		  		<label>{this.props.label}</label>
-		  		<button className="destroy"></button>
-		  	</div>
-		  </li>
-    )
+    if (this.props.completed) {
+      return (
+        <li className="completed">
+		    	<div className="view">
+		    		<input className="toggle" type="checkbox" />
+		    		<label>{this.props.title}</label>
+		    		<button className="destroy"></button>
+		    	</div>
+		    </li>
+      )
+    } else {
+      return (
+        <li>
+		    	<div className="view">
+		    		<input className="toggle" type="checkbox" />
+		    		<label>{this.props.title}</label>
+		    		<button className="destroy"></button>
+		    	</div>
+		    </li>
+      )
+    }
   }
 }
+
 
 class TodoList extends Component {
   render() {
     return (
       <ul className="todo-list">
-        {this.props.todos.map( todo => <TodoItem label={todo.label} status={todo.status} /> )}
+        {this.props.todos.map( todo => <TodoItem title={todo.title} completed={todo.completed} /> )}
       </ul>
     )
   }
@@ -36,15 +49,7 @@ class App extends Component {
 				  <input className="new-todo" placeholder="What needs to be done?" autofocus />
 			  </header>
 			<section className="main">
-        <TodoList todos={[
-          {
-            label: "Taste Javascript",
-            status: "completed"
-          },
-          {
-            label: "Eat a pancake",
-          }
-        ]} />
+        <TodoList todos={todoList} />
 			</section>
 			<footer className="footer">
 				<span className="todo-count"><strong>0</strong> item(s) left</span>
